@@ -6,15 +6,15 @@ const API_KEY = "api_key=2aaff3e0e65ad152a0b8ca28eefba92a";
 const BASE_URL ="https://api.themoviedb.org/3";
 const API_URL = BASE_URL + "/discover/movie?sort_by=popularity.desc&" + API_KEY;
 const POSTER_PART_URL = "https://image.tmdb.org/t/p/w500";
-const mainTag = document.getElementById("main"); //get the html element you want to place the fetched movie content.
 const SEARCH_URL = BASE_URL + "/search/movie?"+API_KEY; // SEARCH LINK
+const mainTag = document.getElementById("main"); //get the html element you want to place the fetched movie content.
+
 const form = document.getElementById("form");//Get the form
 const search = document.getElementById("search"); //get the search
 
 /* Genries :https://api.themoviedb.org/3/genre/movie/list?api_key=2aaff3e0e65ad152a0b8ca28eefba92a*/
 
-const genre =  
-  "genres": [
+const genres =  [
     {
       "id": 28,
       "name": "Action"
@@ -93,7 +93,82 @@ const genre =
     }
   ]
 
+  const tagsElem = document.getElementById("tags");
+  var selectedGenre = [] //an empty array where i store all selected genre.
+  // The function that sets genre on page load
+  function setGenre(){
+    tagsElem.innerHTML =""; //I set it empty because every time the page loads all the tags will be removed.
+    genres.forEach(genre =>{
+      // creating the tags
+      const domTags = document.createElement('button');
+      domTags.classList.add('tag');
+      domTags.id=genre.id; //This creates an id attribute for the tag then assign the genres array id's to it.
+      domTags.innerText = genre.name; //adds genres name to tha tags.
+      domTags.addEventListener('click', ()=>{
+        //Making the tags clickable
+        if(selectedGenre.length !== 0){
+          selectedGenre.push(genre.id);
+        }else{
+          if(selectedGenre.includes(genre.id)){
+            selectedGenre.forEach((id, index) => {
+              if(id == genre.id){
+                selectedGenre.slice(index, 1);
+              }
+            })
+          }else{
+            selectedGenre.push(genre.id);
+          }
+        }
+        getMovies(API_URL + "&with_genres="+encodeURI( selectedGenre.join(",")));
+        highlightSelection();
+      })
+      tagsElem.append(domTags);
+    })
+  }
+  setGenre() ;
+  
+function highlightSelection(){
+  //function that shows a highlighted
+  const tags = document.querySelectorAll('.tag');
+  tags.forEach(tag => {
+    tag.classList.remove('highlight')
+  })
+  clear();
+  if(selectedGenre.length != 0){
+    // check if the selected genre is not empty.
+    selectedGenre.forEach(id =>
+      
+       {
+      const highlightedTag = document.getElementById(id);//The id here is what we get from the selelcted genre loop.
+      highlightedTag.classList.add("highlight");
 
+    })
+  }
+ 
+
+}
+
+//function to clear multiple selected genres
+function clear(){
+let clearBtn = document.getElementById('clear');
+if(clearBtn){
+  clearBtn.classList.add('highlight');
+}else{
+
+    let clearBtn = document.createElement('div');
+    clearBtn.classList.add('tag', 'highlight')
+    clearBtn.id ="clear";
+    clearBtn.innerText = "Clear x";
+    clearBtn.addEventListener('click', ()=>{
+      selectedGenre = [];  
+      setGenre() ;
+      getMovies(API_URL);
+    })
+    tagsElem.append(clearBtn);
+}
+
+
+}
 
 //I want to call a function that load movies when the page loads
 function getMovies(url){
@@ -101,11 +176,17 @@ function getMovies(url){
     fetch(url)
     .then(movieresponses => movieresponses.json())
     .then(data =>{
-        console.log(data);
-       showMovies(data.results);// i am parsing in the data to the showMovies function bellow
+        console.log(data.results);
+        if(data.results.length !==0){
+          showMovies(data.results);// i am parsing in the data to the showMovies function bellow
+        }else{
+            main.innerHTML = `<h1 class="noresult">NO results found</h1>`
+        }
+      
 
     })
 }
+
 getMovies(API_URL);
 
 function showMovies(data){
@@ -124,7 +205,7 @@ function showMovies(data){
 
         movieCard.innerHTML=`
         
-         <img src="${ POSTER_PART_URL+poster_path}" alt="${title}">
+         <img src="${poster_path?  POSTER_PART_URL+poster_path:"https://res.cloudinary.com/dvcw4eghu/image/upload/v1645805622/1080x1580_zkkjcp.png" }" alt="${title}">
             <div class="movie_info">
                 <h3>${title}</h3>
                
@@ -159,6 +240,8 @@ form.addEventListener('submit',(e)=>{
 e.preventDefault(); //The preventDefault () method cancels the event if it is cancelable, meaning that the default action that belongs to the event will not occur.
 
 const searchTerm = search.value;
+  selectedGenre=[];
+  setGenre();
 if(searchTerm){
     getMovies(SEARCH_URL+"&query="+searchTerm);
 }else{

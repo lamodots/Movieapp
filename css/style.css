@@ -12,19 +12,45 @@
 body{
     
     font-family:'Nunito', sans-serif;
-    background-color:var(--primary-color)
+   // background-color:var(--primary-color)
 
 }
 header{
     padding:1rem;
     display:flex;
-    justify-content:flex-end;
+   // justify-content:flex-end;
+   justify-content:space-between;
     background-color:var(--seconday-color);
+}
+#tags{
+    display:flex;
+    width:75%;
+    flex-wrap:wrap;
+    justify-content:center;
+    align-items:center;
+    //margin:0.8rem auto;
+  
+}
+.tag{
+   
+    color:#fff;
+    padding:0.6rem 1.25rem;
+    background-color:var(--primary-color);
+    border-radius:3.13rem;
+    text-align:center;
+    margin:0.3rem 0.3rem;
+    display:inline-block;
+    cursor:pointer;
+    border:none;
+}
+.tag:hover{
+   
+    border:0.06rem solid  #7378c5;
 }
 input[type=text]{
     background-color:transparent;
     border:2px solid var(--primary-color);
-    border-radius:50px;
+    border-radius:3.13rem;
     font-size:1rem;
     color:#fff;
     font-family:inherit;
@@ -45,15 +71,17 @@ main{
     justify-content:center;
 }
 .movie_container{
-    width:300px;
+    width:18.8rem;
     margin:1rem;
-    border-radius:5px;
+    border-radius:0.3rem;
     box-shadow:var(--moviecontainer-shadow);
     background-color:var(--seconday-color);
     position:relative;
     overflow:hidden;
+    
     cursor:pointer;
 }
+
 .movie_container img{
     width:100%;
 }
@@ -63,7 +91,7 @@ main{
     align-items:center;
     justify-content:space-between;
     padding: 0.5rem 1rem 1rem;
-    letter-spacing:0.5px;
+    letter-spacing:0.03rem;
 }
 .movie_info h3{
     margin-top:0;
@@ -71,7 +99,7 @@ main{
 .movie_info span{
     background-color: var(--primary-color);
     padding:0.25rem 0.5rem;
-    border-radius:3px;
+    border-radius:0.19rem;
     font-weight:800;
 }
 .movie_info span.green{
@@ -93,10 +121,21 @@ main{
     max-height:100%;
     transform:translateY(101%);
     transition:transform 0.3s ease-in;
+    overflow:auto;
 
 }
 .movie_container:hover .movie_overview{
     transform:translateY(0);
+    
     cursor:pointer;
 
+}
+.tag.highlight{
+    background-color:red;
+}
+.noresult{
+    background-color:blue;
+    margin-top:3rem;
+    padding:20px;
+    color:#fff;
 }
