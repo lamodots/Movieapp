@@ -136,3 +136,27 @@ main{
     padding:20px;
     color:#fff;
 }
+
+.pagination{
+    display:flex;
+    margin:10px 30px;
+    align-items:center;
+    justify-content:center;
+    color:var(--seconday-color);
+  
+}
+.page{
+    padding:20px;
+    cursor:pointer;
+
+}
+.page.disabled{
+    cursor:not-allowed;
+    color:gray;
+}
+.current{
+    padding:10px 20px;
+    font-size:20px;
+    border-radius:50%;
+    border:5px solid orange;
+}
