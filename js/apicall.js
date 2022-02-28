@@ -94,6 +94,17 @@ const genres =  [
   ]
 
   const tagsElem = document.getElementById("tags");
+  const prev = document.getElementById("previous");// the prev page
+  const next = document.getElementById("next");
+  const current = document.getElementById("current");
+
+  var currentPage = 1;
+  var nextPage = 2;
+  var prevPage = 3;
+  var lastUrl = "";
+  var totalPages= 100;
+
+
   var selectedGenre = [] //an empty array where i store all selected genre.
   // The function that sets genre on page load
   function setGenre(){
@@ -172,13 +183,19 @@ if(clearBtn){
 
 //I want to call a function that load movies when the page loads
 function getMovies(url){
+    lastUrl = url; //get the last url
     //fecth the movie data and show the response in the movie container.
     fetch(url)
     .then(movieresponses => movieresponses.json())
     .then(data =>{
         console.log(data.results);
         if(data.results.length !==0){
-          showMovies(data.results);// i am parsing in the data to the showMovies function bellow
+          showMovies(data.results);// i am parsing in the data to the showMovies function 
+            currentPage = data.page;
+            nextPage = currentPage + 1;
+            prevPage = currentPage - 1;
+          totalPages = data.total_pages;
+
         }else{
             main.innerHTML = `<h1 class="noresult">NO results found</h1>`
         }
@@ -249,3 +266,19 @@ if(searchTerm){
 }
 
 })
+
+next.addEventListener("click", ()=>{
+if(nextPage <= totalPages){
+  pageCall(nextPage);
+}
+
+})
+
+function pageCall(page){
+ let urlSplit = lastUrl.split("?");
+ let queryParams = urlSplit[1].split("&");
+ let key =queryParams[queryParams.length -1].split("=");
+ if(key[0] != "page"){
+   
+ }
+}
