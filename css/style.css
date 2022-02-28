@@ -9,11 +9,8 @@
     --seconday-color:#373b69;
     --moviecontainer-shadow:0.2px 4px 5px  0 rgba(0, 0, 0, 0.1);
 }
-body{
-    
-    font-family:'Nunito', sans-serif;
+body{ font-family:'Nunito', sans-serif;
    // background-color:var(--primary-color)
-
 }
 header{
     padding:1rem;
