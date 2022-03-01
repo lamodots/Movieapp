@@ -225,7 +225,7 @@ function showMovies(data){
     data.forEach(tmdbMovies => {
 
         // Apply object distructuring to get inner array values
-        const {title, poster_path, vote_average,release_date, overview}= tmdbMovies;
+        const {title, poster_path, vote_average,release_date, overview,id}= tmdbMovies;
         // for each movie i want to creat a movie card.
 
         const movieCard = document.createElement('div');
@@ -245,14 +245,59 @@ function showMovies(data){
                 <h3>Overview</h3>
                     ${overview}
                     <h4> Release Date: <span>${release_date}</span></h4>
+                    <br/>
+                    <button class="playvid" id="${id}">Play Movie</button>
             </div>
 
             `    
             //appending all the   elemements above into the moview tag
 
             main.appendChild(movieCard); 
+            document.getElementById(id).addEventListener("click", () => {
+              console.log(id);
+              openNav(movie) ; 
+
+            })
   })
 }
+const overlayContent = document.getElementById("overlay-content");
+
+/* Open when someone clicks on the span element */
+function openNav(movie) {
+  let id = movie.id;
+  fetch(BASE_URL + "/movie/"+id+ "/videos?"+ API_KEY).then(res => res.json()).then(videoData => {
+    if(videoData){
+      document.getElementById("myNav").style.width = "100%";
+      if(videoData.results.length > 0){
+        var embed = [];
+        videoData.results.forEach(video => {
+          let {name , key, site } = video;
+          if(site == "Youtube"){
+
+            embed.push(`
+
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/${key}" title="${name}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            
+            `);
+          }
+         
+        })
+
+        overlayContent.innerHTML = embed.join("");
+      }else{
+        overlayContent.innerHTML = `<h1 class="no-results"> No Result Found</h1>`
+      }
+    }
+
+  } )
+  
+}
+
+/* Close when someone clicks on the "x" symbol inside the overlay */
+function closeNav() {
+  document.getElementById("myNav").style.width = "0%";
+}
+
 // Creat different color ratings
 function getColor(vote){
 if(vote >= 8){
