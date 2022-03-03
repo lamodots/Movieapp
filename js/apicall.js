@@ -255,7 +255,7 @@ function showMovies(data){
             main.appendChild(movieCard); 
             document.getElementById(id).addEventListener("click", () => {
               console.log(id);
-              openNav(movie) ; 
+              openNav(tmdbMovies) ; 
 
             })
   })
@@ -263,29 +263,31 @@ function showMovies(data){
 const overlayContent = document.getElementById("overlay-content");
 
 /* Open when someone clicks on the span element */
-function openNav(movie) {
-  let id = movie.id;
-  fetch(BASE_URL + "/movie/"+id+ "/videos?"+ API_KEY).then(res => res.json()).then(videoData => {
+function openNav(tmdbMovies) {
+  let id = tmdbMovies.id;
+  fetch(BASE_URL + "/movie/"+id+"/videos?"+ API_KEY).then(res => res.json()).then(videoData => {
+    console.log(videoData);
     if(videoData){
       document.getElementById("myNav").style.width = "100%";
       if(videoData.results.length > 0){
         var embed = [];
         videoData.results.forEach(video => {
           let {name , key, site } = video;
-          if(site == "Youtube"){
+          if(site == "YouTube"){
 
             embed.push(`
-
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/${key}" title="${name}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/${key}" title="${name}" class="embed hide" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             
-            `);
+            `)
           }
          
         })
-
-        overlayContent.innerHTML = embed.join("");
+        
+        overlayContent.innerHTML = embed.join('');
+        activeSlide=0;
+        showVideos();
       }else{
-        overlayContent.innerHTML = `<h1 class="no-results"> No Result Found</h1>`
+        overlayContent.innerHTML = `<h1 class="no-results"> No Result Found</h1>`;
       }
     }
 
@@ -296,6 +298,24 @@ function openNav(movie) {
 /* Close when someone clicks on the "x" symbol inside the overlay */
 function closeNav() {
   document.getElementById("myNav").style.width = "0%";
+}
+
+var activeSlide = 0;
+function showVideos(){
+let embedClasses = document.querySelectorAll('.embed');
+embedClasses.forEach( (embedTag, idx) =>{
+
+  if(activeSlide == idx){
+    embedTag.classList.add('show');
+    embedTag.classList.remove('hide');
+  }else{
+    embedTag.classList.add('hide');
+    embedTag.classList.remove('show');
+  }
+
+})
+  
+
 }
 
 // Creat different color ratings

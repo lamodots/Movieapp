@@ -228,3 +228,18 @@ main{
     }
   }
   
+  .embed.hide{
+      display:none;
+  }
+  .embed.show{
+      display:inline-block;
+  }
+  .arrow{
+      position:absolute;
+  }
+  .arrow.left-arrow{
+      left:25%;
+  }
+  .arrow.right-arrow{
+    right:25%;
+}
