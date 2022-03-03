@@ -266,3 +266,264 @@ main{
 .dots .dot.active{
     border-color:orange;
 }
+
+@media only screen and (max-width:480px){
+    header{
+        padding:1rem;
+        display:flex;
+       // justify-content:flex-end;
+        flex-direction:column;
+       
+       //justify-content:space-between;
+        background-color:var(--seconday-color);
+    }
+    #tags{
+        display:flex;
+        width:100%;
+        flex-wrap:wrap;
+       // justify-content:center;
+        align-items:center;
+        //margin:0.8rem auto;
+       
+    }
+    .tag{
+       
+        color:#fff;
+        padding:0.6rem 1.25rem;
+        background-color:var(--primary-color);
+        border-radius:3.13rem;
+        text-align:center;
+        margin:0.3rem 0.3rem;
+        display:inline-block;
+        cursor:pointer;
+        border:none;
+        font-size:10px;
+    }
+    .tag:hover{
+       
+        border:0.06rem solid  #7378c5;
+    }
+    input[type=text]{
+        background-color:transparent;
+        border:2px solid var(--primary-color);
+        border-radius:3.13rem;
+        font-size:1rem;
+        color:#fff;
+        font-family:inherit;
+        padding:0.5rem 1rem;
+    }
+    input[type=text]:focus{
+        outline:none;
+        background-color:var(--primary-color);
+    
+    }
+    input[type=text]::placeholder{
+        color: #7378c5;
+    }
+    /* Movie image and card style*/
+    main{
+        display:flex;
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+    .movie_container{
+        width:18.8rem;
+        margin:1rem;
+        border-radius:0.3rem;
+        box-shadow:var(--moviecontainer-shadow);
+        background-color:var(--seconday-color);
+        position:relative;
+        overflow:hidden;
+        
+        cursor:pointer;
+    }
+    
+    .movie_container img{
+        width:100%;
+    }
+    .movie_info{
+        color:#eee;
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        padding: 0.5rem 1rem 1rem;
+        letter-spacing:0.03rem;
+    }
+    .movie_info h3{
+        margin-top:0;
+    }
+    .movie_info span{
+        background-color: var(--primary-color);
+        padding:0.25rem 0.5rem;
+        border-radius:0.19rem;
+        font-weight:800;
+    }
+    .movie_info span.green{
+        color:lightgreen;
+    }
+    .movie_info span.orange{
+        color:orange;
+    }
+    .movie_info span.red{
+        color:red;
+    }
+    .movie_overview{
+        position:absolute;
+        left:0;
+        right:0;
+        bottom:0;
+        background-color:white;
+        padding:1rem;
+        max-height:100%;
+        transform:translateY(101%);
+        transition:transform 0.3s ease-in;
+        overflow:auto;
+    
+    }
+    .movie_container:hover .movie_overview{
+        transform:translateY(0);
+        
+        cursor:pointer;
+    
+    }
+    .tag.highlight{
+        background-color:red;
+    }
+    .noresult{
+        background-color:blue;
+        margin-top:3rem;
+        padding:20px;
+        color:#fff;
+    }
+    
+    .pagination{
+        display:flex;
+        margin:10px 30px;
+        align-items:center;
+        justify-content:center;
+        color:var(--seconday-color);
+      
+    }
+    .page{
+        padding:20px;
+        cursor:pointer;
+    
+    }
+    .page.disabled{
+        cursor:not-allowed;
+        color:gray;
+    }
+    .current{
+        padding:10px 20px;
+        font-size:20px;
+        border-radius:50%;
+        border:5px solid orange;
+    }
+    .playvid{
+        background-color:var(--primary-color);
+        color:white;
+        font-size:16px;
+        font-weight:bold;
+        border:none;
+        boder-radius:50px; 
+        padding:10px 20px;
+        cursor:pointer;
+    }
+    
+    /* The Overlay (background) */
+    .overlay {
+        /* Height & width depends on how you want to reveal the overlay (see JS below) */   
+        height: 100%;
+        width: 0;
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        background-color: rgb(0,0,0); /* Black fallback color */
+        background-color: rgba(0,0,0, 0.9); /* Black w/opacity */
+        overflow-x: hidden; /* Disable horizontal scroll */
+        transition: 0.5s; /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
+      }
+      
+      /* Position the content inside the overlay */
+      .overlay-content {
+        position: relative;
+        top: 10%; /* 25% from the top */
+        width: 100%; /* 100% width */
+        text-align: center; /* Centered text/links */
+        margin-top: 30px; /* 30px top margin to avoid conflict with the close button on smaller screens */
+      }
+      
+      /* The navigation links inside the overlay */
+      .overlay a {
+        padding: 8px;
+        text-decoration: none;
+        font-size: 36px;
+        color: #818181;
+        display: block; /* Display block instead of inline */
+        transition: 0.3s; /* Transition effects on hover (color) */
+      }
+      
+      /* When you mouse over the navigation links, change their color */
+      .overlay a:hover, .overlay a:focus {
+        color: #f1f1f1;
+      }
+      
+      /* Position the close button (top right corner) */
+      .overlay .closebtn {
+        position: absolute;
+        top: 20px;
+        right: 45px;
+        font-size: 60px;
+      }
+      
+      /* When the height of the screen is less than 450 pixels, change the font-size of the links and position the close button again, so they don't overlap */
+      @media screen and (max-height: 450px) {
+        .overlay a {font-size: 20px}
+        .overlay .closebtn {
+          font-size: 40px;
+          top: 15px;
+          right: 35px;
+        }
+      }
+      
+      .embed.hide{
+          display:none;
+      }
+      .embed.show{
+          display:inline-block;
+      }
+      .arrow{
+          position:absolute;
+      }
+      .arrow.left-arrow{
+          top:50%;
+          transform:translateY(-50%);
+          left:25%;
+      }
+      .arrow.right-arrow{
+          top:50%;
+          transform:translateY(-50%);
+        right:25%;
+    }
+    .no-results{
+        color:#fff;
+    }
+    .dots{
+        margin:30px;
+    }
+    .dots .dot{
+        padding:3px 10px;
+        font-size:20px;
+        border-radius:50%;
+        border:5px solid var(--primary-color);
+        color:#fff;
+        text-align:center;
+        margin:5px;
+    }
+    
+    .dots .dot.active{
+        border-color:orange;
+    }
+    
+}
