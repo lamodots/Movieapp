@@ -271,7 +271,8 @@ function openNav(tmdbMovies) {
       document.getElementById("myNav").style.width = "100%";
       if(videoData.results.length > 0){
         var embed = [];
-        videoData.results.forEach(video => {
+        var dots = [];
+        videoData.results.forEach((video, idx) => {
           let {name , key, site } = video;
           if(site == "YouTube"){
 
@@ -280,10 +281,19 @@ function openNav(tmdbMovies) {
             
             `)
           }
-         
+         dots.push(`
+          <span class="dot">${idx + 1}</span>
+         `)
         })
         
-        overlayContent.innerHTML = embed.join('');
+        var content = `
+        <h1 class="no-results">${tmdbMovies.original_title}</h1>
+        <br/>
+        ${embed.join('')}
+        <br/>
+        <div class="dots">${dots.join('')}</div>
+        `
+        overlayContent.innerHTML = content;
         activeSlide=0;
         showVideos();
       }else{
@@ -301,8 +311,12 @@ function closeNav() {
 }
 
 var activeSlide = 0;
+totalVideos =0;
 function showVideos(){
 let embedClasses = document.querySelectorAll('.embed');
+let dots = document.querySelectorAll('.dot');
+
+totalVideos = embedClasses.length;
 embedClasses.forEach( (embedTag, idx) =>{
 
   if(activeSlide == idx){
@@ -314,10 +328,38 @@ embedClasses.forEach( (embedTag, idx) =>{
   }
 
 })
-  
+  dots.forEach((dot, indx) =>{
+    if(activeSlide == indx){
+      dot.classList.add('active');
+    }else{
+      dot.classList.remove('active');
+    }
+
+  })
 
 }
 
+const leftArrow = document.getElementById('left-arrow');
+const rightArrow = document.getElementById('right-arrow');
+
+leftArrow.addEventListener('click', ()=>{ /* left arrow*/
+if(activeSlide > 0){
+  activeSlide --;
+}else{
+  activeSlide = totalVideos - 1;
+}
+showVideos();
+})
+
+rightArrow.addEventListener('click', ()=>{/* right arrow*/
+  if(activeSlide < (totalVideos - 1)){
+    activeSlide ++;
+  }else{
+    activeSlide = 0;
+  }
+  showVideos();
+  
+  })
 // Creat different color ratings
 function getColor(vote){
 if(vote >= 8){

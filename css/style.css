@@ -189,7 +189,7 @@ main{
   /* Position the content inside the overlay */
   .overlay-content {
     position: relative;
-    top: 25%; /* 25% from the top */
+    top: 10%; /* 25% from the top */
     width: 100%; /* 100% width */
     text-align: center; /* Centered text/links */
     margin-top: 30px; /* 30px top margin to avoid conflict with the close button on smaller screens */
@@ -238,8 +238,31 @@ main{
       position:absolute;
   }
   .arrow.left-arrow{
+      top:50%;
+      transform:translateY(-50%);
       left:25%;
   }
   .arrow.right-arrow{
-    right:22%;
+      top:50%;
+      transform:translateY(-50%);
+    right:25%;
+}
+.no-results{
+    color:#fff;
+}
+.dots{
+    margin:30px;
+}
+.dots .dot{
+    padding:3px 10px;
+    font-size:20px;
+    border-radius:50%;
+    border:5px solid var(--primary-color);
+    color:#fff;
+    text-align:center;
+    margin:5px;
+}
+
+.dots .dot.active{
+    border-color:orange;
 }
